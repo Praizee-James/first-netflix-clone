@@ -1,14 +1,49 @@
 import React from 'react';
 import { Play, Info } from 'lucide-react';
+import type { Movie } from '../types';
 
-const HeroBanner: React.FC = () => {
+interface HeroBannerProps {
+  movies?: Movie[];
+  loading?: boolean;
+  error?: string | null;
+}
+
+const HeroBanner: React.FC<HeroBannerProps> = ({ 
+  movies = [], 
+  loading = false, 
+  error = null 
+}) => {
+  // Use the first movie as the featured content, or fallback to default
+  const featuredMovie = movies?.[0] || {
+    title: "Stranger Things",
+    image: "https://images.unsplash.com/photo-1574267432644-f610e3a4f6e8?w=1920&h=1080&fit=crop",
+    rating: "98% Match",
+    year: "2024"
+  };
+
+  if (loading) {
+    return (
+      <div className="relative h-screen w-full bg-black flex items-center justify-center">
+        <div className="text-white text-xl">Loading featured content...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="relative h-screen w-full bg-black flex items-center justify-center">
+        <div className="text-red-500 text-xl">Error: {error}</div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative h-screen w-full bg-black">
-      {/* Background Image Container */}
+      {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=300&h=169&fit=crop" 
-          alt="Stranger Things Background"
+          src={featuredMovie.image} 
+          alt={`${featuredMovie.title} Background`}
           className="w-full h-full object-cover"
         />
         
@@ -22,12 +57,12 @@ const HeroBanner: React.FC = () => {
       <div className="relative z-10 h-full flex items-center px-8 md:px-16 lg:px-24">
         <div className="max-w-2xl space-y-4">
           <h1 className="text-5xl md:text-7xl font-bold text-white">
-            Stranger Things
+            {featuredMovie.title}
           </h1>
           
           <div className="flex items-center space-x-4 text-lg">
-            <span className="text-green-500 font-semibold">98% Match</span>
-            <span className="text-gray-300">2024</span>
+            <span className="text-green-500 font-semibold">{featuredMovie.rating}</span>
+            <span className="text-gray-300">{featuredMovie.year}</span>
             <span className="text-gray-300">•</span>
             <span className="text-gray-300">4 Seasons</span>
             <span className="border border-gray-400 px-1 text-sm text-gray-300">HD</span>
