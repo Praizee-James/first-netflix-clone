@@ -1,6 +1,5 @@
-// src/services/tmdb.ts
 
-const API_KEY = '4bb4b30adf1f7bdf00500b59a782b7f4'; // Replace with your actual API key
+const API_KEY = '4bb4b30adf1f7bdf00500b59a782b7f4'; 
 const BASE_URL = 'https://api.themoviedb.org/3';
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p';
 
